@@ -28,6 +28,29 @@ public class FunctionalTicTacToe {
 		return t;
 	}
 
+	public char getCharIfAllSame(char[] chars) {
+		// Make sure all of the chars are present
+		if(chars.length != size) {
+			return empty;
+		}
+		// Make sure all of the chars are not empty
+		// Make sure all of the chars are the same
+		char t = empty;
+		for(int x = 0; x < size; x++) {
+			if(chars[x] == empty) {
+				return empty;
+			}
+
+			if(t != empty && t != chars[x]) {
+				return empty;
+			}
+
+			t = chars[x];
+		}
+
+		return t;
+	}
+
 	public FunctionalTicTacToe(int size, char firstPlayer) {
 		this.size = size;
 		this.turn = firstPlayer;
@@ -193,10 +216,35 @@ public class FunctionalTicTacToe {
 	}
 
 	public char getWinner() {
-		// Horizontal
+		// Iterate through each winning algorithm
+		// For most of them then iterate for each row
+		for(int x=0; x < size; x++) {
+			char[] chars = getCells(WinningPath.HORIZONTAL, x);
+			char c = getCharIfAllSame(chars);
+			if(c != empty) {
+				return c;
+			}
+		}
 
+		for(int x=0; x < size; x++) {
+			char[] chars = getCells(WinningPath.VERTICAL, x);
+			char c = getCharIfAllSame(chars);
+			if(c != empty) {
+				return c;
+			}
+		}
 
+		char[] chars = getDiagnol1();
+		char c = getCharIfAllSame(chars);
+		if(c != empty) {
+			return c;
+		}
 
+		chars = getDiagnol2();
+		c = getCharIfAllSame(chars);
+		if(c != empty) {
+			return c;
+		}
 
 		return empty;
 	}

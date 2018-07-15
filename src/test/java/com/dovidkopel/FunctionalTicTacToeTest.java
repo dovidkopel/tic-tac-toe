@@ -104,4 +104,15 @@ public class FunctionalTicTacToeTest {
 		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x', 'x'}, ttt5.getDiagnol1());
 
 	}
+
+	@Test
+	public void charsSameTest() {
+		Assert.assertEquals('x', ttt.getCharIfAllSame(new char[]{'x', 'x', 'x'}));
+		Assert.assertEquals('o', ttt.getCharIfAllSame(new char[]{'o', 'o', 'o'}));
+		Assert.assertEquals(FunctionalTicTacToe.empty, ttt.getCharIfAllSame(new char[]{}));
+		Assert.assertEquals(FunctionalTicTacToe.empty, ttt.getCharIfAllSame(new char[]{FunctionalTicTacToe.empty, FunctionalTicTacToe.empty, FunctionalTicTacToe.empty}));
+		Assert.assertEquals(FunctionalTicTacToe.empty, ttt.getCharIfAllSame(new char[]{'o', 'o', 'x'}));
+		Assert.assertEquals(FunctionalTicTacToe.empty, ttt.getCharIfAllSame(new char[]{'o', 'x', 'x'}));
+		Assert.assertEquals(FunctionalTicTacToe.empty, ttt.getCharIfAllSame(new char[]{'x', 'x', 'x', 'o'}));
+	}
 }
