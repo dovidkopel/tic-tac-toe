@@ -20,6 +20,17 @@ public class FunctionalTicTacToe {
 		DIAGNOL
 	}
 
+	public FunctionalTicTacToe(int size, char firstPlayer) {
+		this.size = size;
+		this.turn = firstPlayer;
+		this.board = new char[size*size];
+		clearBoard();
+	}
+
+	public FunctionalTicTacToe() {
+		this(3, 'x');
+	}
+
 	public char[] getEmpty() {
 		char[] t = new char[size];
 		for(int x=0; x < size; x++) {
@@ -51,17 +62,6 @@ public class FunctionalTicTacToe {
 		return t;
 	}
 
-	public FunctionalTicTacToe(int size, char firstPlayer) {
-		this.size = size;
-		this.turn = firstPlayer;
-		this.board = new char[size*size];
-		clearBoard();
-	}
-
-	public FunctionalTicTacToe() {
-		this(3, 'x');
-	}
-
 	public void clearBoard() {
 		for(int x=0; x < size*size; x++) {
 			board[x] = empty;
@@ -77,10 +77,18 @@ public class FunctionalTicTacToe {
 		moveInput();
 	}
 
+	public Scanner getScanner() {
+		return scanner;
+	}
+
+	public int getNextInt() {
+		return getScanner().nextInt();
+	}
+
 	public void moveInput() {
 		printBoard();
 		System.out.println(String.format("Player %s turn: ", turn));
-		int s = scanner.nextInt();
+		int s = getNextInt();
 
 		if(s >= 0 && s < size*size) {
 			makeMove(turn, s);
@@ -115,7 +123,7 @@ public class FunctionalTicTacToe {
 		for(int x=0; x < size; x++) {
 			String r;
 			if(board[x] == empty) {
-				r = String.format("#%d (%d, %d)", x);
+				r = String.format("#%d", x);
 			} else {
 				r = ((Character) board[x]).toString();
 			}
@@ -124,14 +132,6 @@ public class FunctionalTicTacToe {
 			sb.append("\n");
 		}
 		System.out.println(sb.toString());
-	}
-
-	public char getOtherPlayer() {
-		if(turn == 'x') {
-			return 'o';
-		} else {
-			return 'x';
-		}
 	}
 
 	public void printCounts(String label, List<Character> cs) {
