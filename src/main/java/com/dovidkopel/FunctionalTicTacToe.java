@@ -10,14 +10,34 @@ public class FunctionalTicTacToe {
 
 	final static char empty = '\0';
 
+	final static int emptyInt = Byte.toUnsignedInt("\0".getBytes()[0]);
+
+	private int gamesPlayed = 0;
+
+	private int movesMade = 0;
+
+	private int scoreX = 0;
+
+	private int scoreO = 0;
+
 	private Scanner scanner = new Scanner(System.in);
 
 	private char turn;
 
+	public static final String ANSI_RESET = "\u001B[0m";
+	public static final String ANSI_BLACK = "\u001B[30m";
+	public static final String ANSI_RED = "\u001B[31m";
+	public static final String ANSI_GREEN = "\u001B[32m";
+	public static final String ANSI_YELLOW = "\u001B[33m";
+	public static final String ANSI_BLUE = "\u001B[34m";
+	public static final String ANSI_PURPLE = "\u001B[35m";
+	public static final String ANSI_CYAN = "\u001B[36m";
+	public static final String ANSI_WHITE = "\u001B[37m";
+
 	enum WinningPath {
 		HORIZONTAL,
 		VERTICAL,
-		DIAGNOL
+		DIAGONOL
 	}
 
 	public FunctionalTicTacToe(int size, char firstPlayer) {
@@ -62,7 +82,28 @@ public class FunctionalTicTacToe {
 		return t;
 	}
 
+	public void menu() {
+		System.out.println("Input 'n' for new game");
+		System.out.println("Input 's' for scores");
+		System.out.println("Input 'q' to quit");
+		String i = getNextString();
+
+		if(i.equalsIgnoreCase("n")) {
+			clearBoard();
+			moveInput();
+		} else if(i.equalsIgnoreCase("s")) {
+			printScoreBoard();
+		} else if(i.equalsIgnoreCase("d")) {
+			done();
+		} else if(i.equalsIgnoreCase("q")) {
+			System.exit(0);
+		} else {
+			menu();
+		}
+	}
+
 	public void clearBoard() {
+		movesMade = 0;
 		for(int x=0; x < size*size; x++) {
 			board[x] = empty;
 		}
@@ -85,62 +126,99 @@ public class FunctionalTicTacToe {
 		return getScanner().nextInt();
 	}
 
+	public String getNextString() {
+		return getScanner().next("n|q|s");
+	}
+
 	public void moveInput() {
 		printBoard();
-		System.out.println(String.format("Player %s turn: ", turn));
+		System.out.println(String.format("Player %s input your next move: ", turn));
 		int s = getNextInt();
 
-		if(s >= 0 && s < size*size) {
-			makeMove(turn, s);
-			printBoard();
+		try {
+			if(s >= 0 && s < size*size) {
+				makeMove(turn, s);
+				System.out.println(String.format("Player %s just went.", turn));
+				printBoard();
 
-			char winnerResult = getWinner();
-			if(winnerResult != empty) {
-				winner(winnerResult);
-			} else {
-				nextPlayer();
+				char winnerResult = getWinner();
+				if(winnerResult != empty) {
+					winner(winnerResult);
+				} else if(movesMade == size*size) {
+					draw();
+				} else {
+					nextPlayer();
+				}
 			}
+		} catch(IllegalArgumentException e) {
+			System.err.println(String.format("%s%s%s", ANSI_RED, "Invalid move!", ANSI_RESET));
+			moveInput();
 		}
-
 	}
 
 	public void makeMove(char player, int x) {
-		System.out.println(String.format("Player %c wants to move to %d", player, x));
+		System.out.println(String.format("Player %c wants to move to %d.", player, x));
 		if(x < size*size && board[x] == empty) {
 			board[x] = player;
+			movesMade++;
 		} else {
 			throw new IllegalArgumentException("Invalid move!");
 		}
 	}
 
+	public void done() {
+		System.exit(0);
+	}
+
+	public void printScoreBoard() {
+		System.out.println(String.format("o: %d", scoreO));
+		System.out.println(String.format("x: %d", scoreX));
+		System.out.println("\n\n");
+		menu();
+	}
+
+	public void draw() {
+		System.out.println(String.format("%sDraw.%s", ANSI_GREEN, ANSI_RESET));
+		System.out.println("\n\n");
+		menu();
+	}
+
 	public void winner(char player) {
-		System.out.println(String.format("Player %c is the winner.", player));
-		clearBoard();
+		if(player == 'x') {
+			scoreX++;
+		} else if(player == 'o') {
+			scoreO++;
+		}
+
+		System.out.println(String.format("%sPlayer %c is the winner.%s", ANSI_GREEN, player, ANSI_RESET));
+		System.out.println("\n\n");
+		menu();
 	}
 
 	public void printBoard() {
 		StringBuilder sb = new StringBuilder();
-		for(int x=0; x < size; x++) {
+		for(int x=0; x < size*size; x++) {
 			String r;
 			if(board[x] == empty) {
-				r = String.format("#%d", x);
+				r = String.format("%s%d%s", ANSI_WHITE, x, ANSI_RESET);
 			} else {
-				r = ((Character) board[x]).toString();
+				char p = board[x];
+				String color;
+				if(p == 'x') {
+					color = ANSI_CYAN;
+				} else {
+					color = ANSI_YELLOW;
+				}
+				r = String.format("%s%c%s", color, p, ANSI_RESET);
 			}
 
 			sb.append(String.format("%s  ", r));
-			sb.append("\n");
+
+			if(x != 0 && (x+1) % size == 0) {
+				sb.append("\n");
+			}
 		}
 		System.out.println(sb.toString());
-	}
-
-	public void printCounts(String label, List<Character> cs) {
-		StringBuilder sb = new StringBuilder();
-		Iterator i = cs.iterator();
-		while(i.hasNext()) {
-			sb.append(i.next()+", ");
-		}
-		System.out.println(label+": "+sb.toString());
 	}
 
 	/***
@@ -190,7 +268,7 @@ public class FunctionalTicTacToe {
 				case VERTICAL:
 					c = getColumn(args[0], x);
 					break;
-				case DIAGNOL:
+				case DIAGONOL:
 					c = getDiagnol(args[0], x);
 					break;
 			}
@@ -207,12 +285,12 @@ public class FunctionalTicTacToe {
 		return getCells(WinningPath.HORIZONTAL, row);
 	}
 
-	public char[] getDiagnol1() {
-		return getCells(WinningPath.DIAGNOL, 0);
+	public char[] getDiagonol1() {
+		return getCells(WinningPath.DIAGONOL, 0);
 	}
 
-	public char[] getDiagnol2() {
-		return getCells(WinningPath.DIAGNOL, 1);
+	public char[] getDiagonol2() {
+		return getCells(WinningPath.DIAGONOL, 1);
 	}
 
 	public char getWinner() {
@@ -221,26 +299,26 @@ public class FunctionalTicTacToe {
 		for(int x=0; x < size; x++) {
 			char[] chars = getCells(WinningPath.HORIZONTAL, x);
 			char c = getCharIfAllSame(chars);
+
+			if(c != empty) {
+				return c;
+			}
+
+			chars = getCells(WinningPath.VERTICAL, x);
+			c = getCharIfAllSame(chars);
+
 			if(c != empty) {
 				return c;
 			}
 		}
 
-		for(int x=0; x < size; x++) {
-			char[] chars = getCells(WinningPath.VERTICAL, x);
-			char c = getCharIfAllSame(chars);
-			if(c != empty) {
-				return c;
-			}
-		}
-
-		char[] chars = getDiagnol1();
+		char[] chars = getDiagonol1();
 		char c = getCharIfAllSame(chars);
 		if(c != empty) {
 			return c;
 		}
 
-		chars = getDiagnol2();
+		chars = getDiagonol2();
 		c = getCharIfAllSame(chars);
 		if(c != empty) {
 			return c;
