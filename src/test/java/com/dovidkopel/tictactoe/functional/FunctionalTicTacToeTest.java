@@ -1,4 +1,4 @@
-package com.dovidkopel;
+package com.dovidkopel.tictactoe.functional;
 
 
 import org.junit.Assert;
