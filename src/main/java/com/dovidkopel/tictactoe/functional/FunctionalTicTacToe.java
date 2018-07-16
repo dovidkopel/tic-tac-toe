@@ -10,8 +10,6 @@ public class FunctionalTicTacToe {
 
 	final static char empty = '\0';
 
-	final static int emptyInt = Byte.toUnsignedInt("\0".getBytes()[0]);
-
 	private int gamesPlayed = 0;
 
 	private int movesMade = 0;
@@ -37,7 +35,7 @@ public class FunctionalTicTacToe {
 	enum WinningPath {
 		HORIZONTAL,
 		VERTICAL,
-		DIAGONOL
+		DIAGONAL
 	}
 
 	public FunctionalTicTacToe(int size, char firstPlayer) {
@@ -51,9 +49,13 @@ public class FunctionalTicTacToe {
 		this(3, 'x');
 	}
 
+	public int getSize() {
+		return size;
+	}
+
 	public char[] getEmpty() {
-		char[] t = new char[size];
-		for(int x=0; x < size; x++) {
+		char[] t = new char[getSize()];
+		for(int x=0; x < getSize(); x++) {
 			t[x] = empty;
 		}
 		return t;
@@ -61,13 +63,13 @@ public class FunctionalTicTacToe {
 
 	public char getCharIfAllSame(char[] chars) {
 		// Make sure all of the chars are present
-		if(chars.length != size) {
+		if(chars.length != getSize()) {
 			return empty;
 		}
 		// Make sure all of the chars are not empty
 		// Make sure all of the chars are the same
 		char t = empty;
-		for(int x = 0; x < size; x++) {
+		for(int x = 0; x < getSize(); x++) {
 			if(chars[x] == empty) {
 				return empty;
 			}
@@ -180,6 +182,7 @@ public class FunctionalTicTacToe {
 	public void draw() {
 		System.out.println(String.format("%sDraw.%s", ANSI_GREEN, ANSI_RESET));
 		System.out.println("\n\n");
+		gamesPlayed++;
 		menu();
 	}
 
@@ -192,6 +195,7 @@ public class FunctionalTicTacToe {
 
 		System.out.println(String.format("%sPlayer %c is the winner.%s", ANSI_GREEN, player, ANSI_RESET));
 		System.out.println("\n\n");
+		gamesPlayed++;
 		menu();
 	}
 
@@ -241,7 +245,7 @@ public class FunctionalTicTacToe {
 		return column + (size * offset);
 	}
 
-	public int getDiagnol(int diag, int offset) {
+	public int getDiagonal(int diag, int offset) {
 		if(diag == 0) {
 			if(offset == 0) {
 				return 0;
@@ -268,8 +272,8 @@ public class FunctionalTicTacToe {
 				case VERTICAL:
 					c = getColumn(args[0], x);
 					break;
-				case DIAGONOL:
-					c = getDiagnol(args[0], x);
+				case DIAGONAL:
+					c = getDiagonal(args[0], x);
 					break;
 			}
 			t[x] = board[c];
@@ -285,12 +289,12 @@ public class FunctionalTicTacToe {
 		return getCells(WinningPath.HORIZONTAL, row);
 	}
 
-	public char[] getDiagonol1() {
-		return getCells(WinningPath.DIAGONOL, 0);
+	public char[] getDiagonal1() {
+		return getCells(WinningPath.DIAGONAL, 0);
 	}
 
-	public char[] getDiagonol2() {
-		return getCells(WinningPath.DIAGONOL, 1);
+	public char[] getDiagonal2() {
+		return getCells(WinningPath.DIAGONAL, 1);
 	}
 
 	public char getWinner() {
@@ -312,13 +316,13 @@ public class FunctionalTicTacToe {
 			}
 		}
 
-		char[] chars = getDiagonol1();
+		char[] chars = getDiagonal1();
 		char c = getCharIfAllSame(chars);
 		if(c != empty) {
 			return c;
 		}
 
-		chars = getDiagonol2();
+		chars = getDiagonal2();
 		c = getCharIfAllSame(chars);
 		if(c != empty) {
 			return c;

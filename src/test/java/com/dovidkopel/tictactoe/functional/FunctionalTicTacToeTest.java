@@ -4,15 +4,12 @@ package com.dovidkopel.tictactoe.functional;
 import org.junit.Assert;
 import org.junit.Test;
 import org.mockito.Mockito;
-import org.mockito.invocation.InvocationOnMock;
 import org.mockito.stubbing.Answer;
-import org.mockito.verification.VerificationMode;
 
 public class FunctionalTicTacToeTest {
 	private FunctionalTicTacToe ttt = new FunctionalTicTacToe();
 
 	private static char empty = FunctionalTicTacToe.empty;
-	private static int emptyInt = FunctionalTicTacToe.emptyInt;
 
 	@Test
 	public void getWinnerEmpty() {
@@ -87,14 +84,14 @@ public class FunctionalTicTacToeTest {
 		ttt.makeMove('x', 0);
 		ttt.makeMove('x', 4);
 		ttt.makeMove('x', 8);
-		Assert.assertArrayEquals(new char[] {'x', 'x', 'x'}, ttt.getDiagonol1());
+		Assert.assertArrayEquals(new char[] {'x', 'x', 'x'}, ttt.getDiagonal1());
 		Assert.assertEquals('x', ttt.getWinner());
 
 		ttt.clearBoard();
 		ttt.makeMove('x', 2);
 		ttt.makeMove('x', 4);
 		ttt.makeMove('x', 6);
-		Assert.assertArrayEquals(new char[] {'x', 'x', 'x'}, ttt.getDiagonol2());
+		Assert.assertArrayEquals(new char[] {'x', 'x', 'x'}, ttt.getDiagonal2());
 		Assert.assertEquals('x', ttt.getWinner());
 
 		/**
@@ -108,14 +105,14 @@ public class FunctionalTicTacToeTest {
 		ttt4.makeMove('x', 5);
 		ttt4.makeMove('x', 10);
 		ttt4.makeMove('x', 15);
-		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x'}, ttt4.getDiagonol1());
+		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x'}, ttt4.getDiagonal1());
 
 		ttt4.clearBoard();
 		ttt4.makeMove('x', 3);
 		ttt4.makeMove('x', 6);
 		ttt4.makeMove('x', 9);
 		ttt4.makeMove('x', 12);
-		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x'}, ttt4.getDiagonol2());
+		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x'}, ttt4.getDiagonal2());
 
 		FunctionalTicTacToe ttt5 = new FunctionalTicTacToe(5, 'x');
 		ttt5.makeMove('x', 0);
@@ -123,8 +120,7 @@ public class FunctionalTicTacToeTest {
 		ttt5.makeMove('x', 12);
 		ttt5.makeMove('x', 18);
 		ttt5.makeMove('x', 24);
-		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x', 'x'}, ttt5.getDiagonol1());
-
+		Assert.assertArrayEquals(new char[] {'x', 'x', 'x', 'x', 'x'}, ttt5.getDiagonal1());
 	}
 
 	@Test
