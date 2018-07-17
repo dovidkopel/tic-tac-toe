@@ -4,22 +4,32 @@ package com.dovidkopel.tictactoe.functional;
 import java.util.*;
 
 public class FunctionalTicTacToe {
+	// Single dimension size
 	private final int size;
 
+	// The actual board
 	private char[] board;
 
 	final static char empty = '\0';
 
+	// The number of games played
 	private int gamesPlayed = 0;
 
+	// The number of moved made
+	// in a single game
 	private int movesMade = 0;
 
+	// The cumulative score for
+	// player x
 	private int scoreX = 0;
 
+	// The cumulative score for
+	// player o
 	private int scoreO = 0;
 
 	private Scanner scanner = new Scanner(System.in);
 
+	// The current player
 	private char turn;
 
 	public static final String ANSI_RESET = "\u001B[0m";
@@ -45,6 +55,7 @@ public class FunctionalTicTacToe {
 		clearBoard();
 	}
 
+	// Default constructor
 	public FunctionalTicTacToe() {
 		this(3, 'x');
 	}
