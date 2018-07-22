@@ -1,4 +1,6 @@
-package com.dovidkopel.tictactoe.oop;
+package com.dovidkopel.tictactoe.oop.board;
+
+import com.dovidkopel.tictactoe.oop.position.Position;
 
 import java.util.Collection;
 

@@ -1,38 +1,40 @@
 package com.dovidkopel.tictactoe.oop;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
-import io.github.lukehutch.fastclasspathscanner.matchprocessor.ImplementingClassMatchProcessor;
-import io.github.lukehutch.fastclasspathscanner.scanner.ScanResult;
+import com.dovidkopel.tictactoe.oop.board.TicTacToeBoard;
+import com.dovidkopel.tictactoe.oop.game.SequentialTurnBasedGame;
+import com.dovidkopel.tictactoe.oop.strategy.StrategyScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.PostConstruct;
-import java.util.ArrayList;
-import java.util.List;
 
 @Service
 public class TicTacToe {
-	List<WinningStrategy> winningStrategies = new ArrayList();
+	private Logger logger = LoggerFactory.getLogger(getClass());
 
-	FastClasspathScanner scanner = new FastClasspathScanner();
+	private StrategyScanner strategyScanner;
 
-	Logger logger = LoggerFactory.getLogger(getClass());
+	private TicTacToeBoard board;
 
-	@PostConstruct
-	public void init() {
-		logger.info("Started..");
-		scanner.matchClassesImplementing(WinningStrategy.class,
-			i -> {
-				try {
-					winningStrategies.add(i.newInstance());
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
-				} catch (InstantiationException e) {
-					e.printStackTrace();
-				}
-			}
-		).scan();
-		logger.info("There are {} winning strategies", winningStrategies.size());
+	private SequentialTurnBasedGame game;
+
+	@Autowired
+	public TicTacToe setStrategyScanner(StrategyScanner strategyScanner) {
+		this.strategyScanner = strategyScanner;
+		return this;
+	}
+
+	@Autowired
+	public TicTacToe setBoard(TicTacToeBoard board) {
+		this.board = board;
+		return this;
+	}
+
+	@Autowired
+	public TicTacToe setGame(SequentialTurnBasedGame game) {
+		this.game = game;
+		return this;
 	}
 }

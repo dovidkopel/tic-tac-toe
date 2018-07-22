@@ -1,8 +1,11 @@
-package com.dovidkopel.tictactoe.oop;
+package com.dovidkopel.tictactoe.oop.position;
+
+import org.springframework.stereotype.Component;
 
 import java.util.Objects;
 import java.util.Optional;
 
+@Component
 public class TwoDimensionalPosition implements Position {
 	final private Number x;
 

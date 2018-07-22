@@ -1,7 +1,7 @@
-package com.dovidkopel.tictactoe.oop;
+package com.dovidkopel.tictactoe.oop.game;
 
 import java.util.Collection;
 
-public interface GameOutcome extends Game {
+public interface GameOutcome {
 	Collection<GameStatusContainer<?>> getStatuses();
 }

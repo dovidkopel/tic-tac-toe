@@ -1,6 +1,4 @@
-package com.dovidkopel.tictactoe.oop;
-
-import java.util.Collection;
+package com.dovidkopel.tictactoe.oop.game;
 
 public interface GameStatusContainer<T> {
 	GameStatus getStatus();

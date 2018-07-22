@@ -1,10 +1,15 @@
-package com.dovidkopel.tictactoe.oop;
+package com.dovidkopel.tictactoe.oop.board;
+
+import com.dovidkopel.tictactoe.oop.position.Position;
+import com.dovidkopel.tictactoe.oop.position.TwoDimensionalPosition;
+import org.springframework.stereotype.Component;
 
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Component
 public class TwoDimensionalTicTacToeBoard implements TicTacToeBoard {
 	Set<TwoDimensionalPosition> positions = new HashSet();
 

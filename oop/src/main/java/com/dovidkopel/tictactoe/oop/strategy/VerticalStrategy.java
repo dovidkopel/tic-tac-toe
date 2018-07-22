@@ -1,8 +1,7 @@
 package com.dovidkopel.tictactoe.oop.strategy;
 
-import com.dovidkopel.tictactoe.oop.GameStatusContainer;
-import com.dovidkopel.tictactoe.oop.TicTacToeBoard;
-import com.dovidkopel.tictactoe.oop.WinningStrategy;
+import com.dovidkopel.tictactoe.oop.game.GameStatusContainer;
+import com.dovidkopel.tictactoe.oop.board.TicTacToeBoard;
 
 import java.util.List;
 
