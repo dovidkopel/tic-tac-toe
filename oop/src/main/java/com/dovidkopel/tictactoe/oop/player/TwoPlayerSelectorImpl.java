@@ -17,11 +17,14 @@ public class TwoPlayerSelectorImpl extends TwoPlayerSelector {
 
 	public TwoPlayerSelectorImpl(int starting) {
 		this.starting = starting;
-		reset();
 	}
 
 	public TwoPlayerSelectorImpl() {
 		this.starting = ThreadLocalRandom.current().nextInt(0, upperBound);
+	}
+
+	@Override
+	public void init() {
 		reset();
 	}
 

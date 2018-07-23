@@ -1,24 +1,23 @@
 package com.dovidkopel.tictactoe.oop;
 
 import com.dovidkopel.tictactoe.oop.board.TicTacToeBoard;
-import com.dovidkopel.tictactoe.oop.game.SequentialTurnBasedGame;
+import com.dovidkopel.tictactoe.oop.board.TwoDimensionalTicTacToeBoard;
+import com.dovidkopel.tictactoe.oop.game.SequentialTurnBasedBoardGame;
+import com.dovidkopel.tictactoe.oop.game.SequentialTurnBasedBoardGameImpl;
 import com.dovidkopel.tictactoe.oop.strategy.StrategyScanner;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.annotation.PostConstruct;
-
 @Service
-public class TicTacToe {
+public class TicTacToe extends SequentialTurnBasedBoardGameImpl<TicTacToeBoard> {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private StrategyScanner strategyScanner;
 
 	private TicTacToeBoard board;
-
-	private SequentialTurnBasedGame game;
 
 	@Autowired
 	public TicTacToe setStrategyScanner(StrategyScanner strategyScanner) {
@@ -32,9 +31,8 @@ public class TicTacToe {
 		return this;
 	}
 
-	@Autowired
-	public TicTacToe setGame(SequentialTurnBasedGame game) {
-		this.game = game;
-		return this;
+	@Override
+	public TicTacToeBoard getBoard() {
+		return board;
 	}
 }

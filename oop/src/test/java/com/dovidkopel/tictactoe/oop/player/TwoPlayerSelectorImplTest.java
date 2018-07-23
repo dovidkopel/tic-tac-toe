@@ -15,9 +15,11 @@ public class TwoPlayerSelectorImplTest {
 	@Test
 	public void nextPlayerRandom() {
 		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl();
+		Assert.assertTrue(selector.getCurrentPlayer() == null);
+		selector.init();
 		int s = selector.getStarting();
 		System.out.println("Starting: "+s);
-		Assert.assertTrue(selector.currentPlayer().isPresent());
+		Assert.assertTrue(selector.getCurrentPlayer() != null);
 		List<Player> playerList = new ArrayList();
 		for(int x=0;x<100;x++) {
 			Player p = selector.nextPlayer();
@@ -40,18 +42,22 @@ public class TwoPlayerSelectorImplTest {
 	@Test
 	public void nextPlayerX() {
 		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl(0);
+		Assert.assertTrue(selector.getCurrentPlayer() == null);
+		selector.init();
 		int s = selector.getStarting();
 		System.out.println("Starting: "+s);
-		Assert.assertTrue(selector.currentPlayer().isPresent());
-		Assert.assertEquals(selector.playerX, selector.currentPlayer().get());
+		Assert.assertTrue(selector.getCurrentPlayer() != null);
+		Assert.assertEquals(selector.playerX, selector.getCurrentPlayer());
 	}
 
 	@Test
 	public void nextPlayerO() {
 		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl(1);
+		Assert.assertTrue(selector.getCurrentPlayer() == null);
+		selector.init();
 		int s = selector.getStarting();
 		System.out.println("Starting: "+s);
-		Assert.assertTrue(selector.currentPlayer().isPresent());
-		Assert.assertEquals(selector.playerO, selector.currentPlayer().get());
+		Assert.assertTrue(selector.getCurrentPlayer() != null);
+		Assert.assertEquals(selector.playerO, selector.getCurrentPlayer());
 	}
 }

@@ -7,6 +7,8 @@ import java.util.Set;
 public interface PlayerSelector {
 	void reset();
 
+	void init();
+
 	// Who are all of the players
 	Collection<Player> getAllPlayers();
 

@@ -1,5 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game;
 
+import com.dovidkopel.tictactoe.oop.game.turn.Turn;
 import com.dovidkopel.tictactoe.oop.game.turn.TurnHistory;
 
 import java.io.Serializable;
@@ -16,4 +17,8 @@ public interface Game extends
 	LocalDateTime getCreated();
 
 	LocalDateTime getUpdated();
+
+	Turn start();
+
+	void stop();
 }

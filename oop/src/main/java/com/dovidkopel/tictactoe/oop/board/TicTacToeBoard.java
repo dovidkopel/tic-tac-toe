@@ -4,7 +4,7 @@ import com.dovidkopel.tictactoe.oop.position.Position;
 
 import java.util.Collection;
 
-public interface TicTacToeBoard {
+public interface TicTacToeBoard extends Board {
 	<T extends Position> Collection<T> getAllPositions();
 
 	<T extends Position> Collection<T> getAvailablePositions();
