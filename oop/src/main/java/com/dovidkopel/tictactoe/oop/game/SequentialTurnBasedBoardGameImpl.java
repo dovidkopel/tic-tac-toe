@@ -58,6 +58,7 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 	@PostConstruct
 	public void init() {
+		evaluate(GameStatus.NOOP);
 	}
 
 	@Override

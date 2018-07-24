@@ -1,5 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game.status;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
@@ -10,6 +11,14 @@ import java.util.stream.Collectors;
 @Component
 public class GameStatusEventBusImpl<GE extends GameEvent, S> implements GameStatusEventBus<GE, S> {
 	final private List<GameStatusSubscriber<GE, S>> subscribers = new ArrayList();
+
+	final private List<GameStatusSubscriber<GE, S>> autowiredSubscribers = new ArrayList();
+
+	@Autowired
+	public void setAutowiredSubscribers(List<GameStatusSubscriber<GE, S>> subs) {
+		this.autowiredSubscribers.addAll(subs);
+		subs.forEach(this::subscribe);
+	}
 
 	private List<GameStatusSubscriber<GE, S>> cloneSubscribers() {
 		return new ArrayList(subscribers);
@@ -44,12 +53,22 @@ public class GameStatusEventBusImpl<GE extends GameEvent, S> implements GameStat
 	}
 
 	@Override
+	public void unsubscribeAll() {
+		subscribers.clear();
+	}
+
+	@Override
+	public List<GameStatusSubscriber<GE, S>> getSubscriptions() {
+		return subscribers;
+	}
+
+	@Override
 	public List<GameStatusDetails<S>> trigger(GE event) {
 		// Already pre-sorted
 		return subscribers
 			.stream()
 			.filter(s -> s.test(event))
-			.map(s -> s.apply(event))
+			.flatMap(s -> s.apply(event).stream())
 			.filter(s -> s != null)
 			.sorted()
 			.collect(Collectors.toList());

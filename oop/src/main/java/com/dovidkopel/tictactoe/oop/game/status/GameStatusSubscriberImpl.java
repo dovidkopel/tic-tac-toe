@@ -1,5 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game.status;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -12,17 +13,17 @@ public class GameStatusSubscriberImpl<GE extends GameEvent, S> implements GameSt
 
 	final private Predicate<GE> predicate;
 
-	final private Function<GE, GameStatusDetails<S>> func;
+	final private Function<GE, Collection<GameStatusDetails<S>>> func;
 
-	public GameStatusSubscriberImpl(Function<GE, GameStatusDetails<S>> func) {
-		this(UUID.randomUUID(), Long.MAX_VALUE, func, ge -> true);
+	public GameStatusSubscriberImpl(Long priority, Function<GE, Collection<GameStatusDetails<S>>> func, Predicate<GE> predicate) {
+		this(UUID.randomUUID(), priority, func, predicate);
 	}
 
-	public GameStatusSubscriberImpl(Function<GE, GameStatusDetails<S>> func, Predicate<GE> predicate) {
+	public GameStatusSubscriberImpl(Function<GE, Collection<GameStatusDetails<S>>> func, Predicate<GE> predicate) {
 		this(UUID.randomUUID(), Long.MAX_VALUE, func, predicate);
 	}
 
-	public GameStatusSubscriberImpl(UUID id, Long priority, Function<GE, GameStatusDetails<S>> func, Predicate<GE> predicate) {
+	public GameStatusSubscriberImpl(UUID id, Long priority, Function<GE, Collection<GameStatusDetails<S>>> func, Predicate<GE> predicate) {
 		this.id = id;
 		this.priority = priority;
 		this.predicate = predicate;
@@ -40,7 +41,7 @@ public class GameStatusSubscriberImpl<GE extends GameEvent, S> implements GameSt
 	}
 
 	@Override
-	public GameStatusDetails<S> apply(GE ge) {
+	public Collection<GameStatusDetails<S>> apply(GE ge) {
 		return func.apply(ge);
 	}
 

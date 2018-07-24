@@ -1,5 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game.status;
 
+import java.util.Collection;
 import java.util.Optional;
 import java.util.UUID;
 import java.util.function.Function;
@@ -8,7 +9,7 @@ import java.util.function.Supplier;
 
 public interface GameStatusSubscriber<GE extends GameEvent, S> extends
 	Predicate<GE>,
-	Function<GE, GameStatusDetails<S>>,
+	Function<GE, Collection<GameStatusDetails<S>>>,
 	Comparable<GameStatusSubscriber<GE, S>> {
 
 	UUID getId();
