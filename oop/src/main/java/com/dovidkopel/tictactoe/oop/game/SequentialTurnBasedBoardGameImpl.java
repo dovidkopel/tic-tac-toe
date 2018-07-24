@@ -64,7 +64,13 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	@Override
 	public Turn start() {
 		evaluate(GameStatus.START_GAME);
-		currentTurn = new TurnImpl(playerSelector.getCurrentPlayer());
+		return getCurrentTurn();
+	}
+
+	@Override
+	public Turn getNextTurn() {
+		Player player = playerSelector.getCurrentPlayer();
+		currentTurn = new TurnImpl(player);
 		turns.add(currentTurn);
 		return currentTurn;
 	}
@@ -109,15 +115,35 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	public synchronized Collection<GameEvent> completeTurn(Turn turn, Action action) {
 		Set<GameEvent> statuses = new HashSet();
 
-		// Set Action to turn
-		Turn t = new TurnImpl(turn, action);
-		turns.add(t);
+		if(turns.contains(turn)) {
+			// Set Action to turn
+			Turn t = new TurnImpl(turn, action);
+			// Invoke a TurnPreSelection event
+			evaluate(
+				new GameEventImpl(
+					GameStatus.TURN_PRE_SELECTION,
+					t,
+					this
+				)
+			);
 
-		Player np = playerSelector.nextPlayer();
-		Turn nt = new TurnImpl(np);
-		currentTurn = nt;
+			Player np = playerSelector.nextPlayer();
+			Turn nt = new TurnImpl(np);
 
-		return statuses;
+			evaluate(
+				new GameEventImpl(
+					GameStatus.TURN_ACTIVE,
+					nt,
+					this
+				)
+			);
+
+			currentTurn = nt;
+			//turns.add(t);
+
+			return statuses;
+		}
+
 	}
 
 	@Override

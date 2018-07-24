@@ -16,5 +16,7 @@ public interface SequentialTurnBasedBoardGame<T extends Board> extends BoardGame
 
 	Turn getCurrentTurn();
 
+	Turn getNextTurn();
+
 	Collection<GameEvent> completeTurn(Turn turn, Action action);
 }
