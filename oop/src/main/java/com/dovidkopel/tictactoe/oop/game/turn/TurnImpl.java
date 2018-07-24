@@ -67,7 +67,6 @@ public class TurnImpl<T extends Action> implements Turn<T> {
 
 	@Override
 	public int hashCode() {
-
 		return Objects.hash(id, created, player);
 	}
 
