@@ -82,7 +82,7 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 		evaluate(
 			new GameEventImpl(
-				GameStatus.ACTIVE,
+				GameStatus.TURN_ACTIVE,
 				nt,
 				this
 			)
