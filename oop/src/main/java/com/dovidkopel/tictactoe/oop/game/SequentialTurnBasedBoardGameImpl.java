@@ -8,6 +8,7 @@ import com.dovidkopel.tictactoe.oop.game.turn.Turn;
 import com.dovidkopel.tictactoe.oop.game.turn.TurnImpl;
 import com.dovidkopel.tictactoe.oop.player.Player;
 import com.dovidkopel.tictactoe.oop.player.PlayerSelector;
+import com.dovidkopel.tictactoe.oop.strategy.WinningStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -34,6 +35,8 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 	private List<GameStatusDetails> statuses = new CopyOnWriteArrayList();
 
+	private List<WinningStrategy> strategies = new ArrayList();
+
 	public SequentialTurnBasedBoardGameImpl() {
 		this.created = LocalDateTime.now();
 		this.id = UUID.randomUUID();
@@ -47,6 +50,12 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	@Autowired
 	public SequentialTurnBasedBoardGameImpl setPlayerSelector(PlayerSelector playerSelector) {
 		this.playerSelector = playerSelector;
+		return this;
+	}
+
+	@Autowired
+	public SequentialTurnBasedBoardGameImpl<T> setStrategies(List<WinningStrategy> strategies) {
+		this.strategies = strategies;
 		return this;
 	}
 
@@ -145,6 +154,10 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 					this
 				)
 			);
+
+			// Now we want to evaluate the turn
+			// what happened if anything...
+			strategies.stream().map(s -> s.evaluateGame(getBoard()));
 
 			turns.add(t);
 		}
