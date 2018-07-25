@@ -1,7 +1,7 @@
 package com.dovidkopel.tictactoe.oop.strategy;
 
 import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
-import com.dovidkopel.tictactoe.oop.board.TicTacToeBoard;
+import com.dovidkopel.game.board.TicTacToeBoard;
 
 import java.util.List;
 

@@ -1,7 +1,7 @@
-package com.dovidkopel.tictactoe.oop.board;
+package com.dovidkopel.game.board;
 
-import com.dovidkopel.tictactoe.oop.position.Position;
-import com.dovidkopel.tictactoe.oop.position.TwoDimensionalPosition;
+import com.dovidkopel.game.position.Position;
+import com.dovidkopel.game.position.TwoDimensionalPosition;
 import org.springframework.stereotype.Component;
 
 import java.util.Collection;

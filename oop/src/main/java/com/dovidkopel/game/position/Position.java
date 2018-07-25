@@ -1,4 +1,4 @@
-package com.dovidkopel.tictactoe.oop.position;
+package com.dovidkopel.game.position;
 
 import java.io.Serializable;
 

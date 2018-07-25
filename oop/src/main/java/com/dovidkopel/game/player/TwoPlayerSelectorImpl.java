@@ -1,8 +1,7 @@
-package com.dovidkopel.tictactoe.oop.player;
+package com.dovidkopel.game.player;
 
 import org.springframework.stereotype.Component;
 
-import java.util.Optional;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component

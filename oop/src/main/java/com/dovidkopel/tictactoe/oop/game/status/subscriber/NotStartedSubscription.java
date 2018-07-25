@@ -1,7 +1,7 @@
 package com.dovidkopel.tictactoe.oop.game.status.subscriber;
 
 import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatus;
+import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetailsImpl;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusSubscriberImpl;
 import org.springframework.stereotype.Component;
@@ -15,11 +15,11 @@ public class NotStartedSubscription<GE extends GameEvent, S> extends GameStatusS
 			0L,
 			ge -> Arrays.asList(
 				new GameStatusDetailsImpl(
-					GameStatus.NOT_STARTED
+					GameStatusE.NOT_STARTED
 				)
 			),
-			ge -> !ge.getGame().getStatuses().contains(GameStatus.STARTED) &&
-				!ge.getStatus().equals(GameStatus.START_GAME)
+			ge -> !ge.getGame().getStatuses().contains(GameStatusE.STARTED) &&
+				!ge.getStatus().equals(GameStatusE.START_GAME)
 		);
 	}
 }

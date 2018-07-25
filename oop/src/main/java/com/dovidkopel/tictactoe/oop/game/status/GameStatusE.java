@@ -2,7 +2,7 @@ package com.dovidkopel.tictactoe.oop.game.status;
 
 public enum
 
-GameStatus {
+GameStatusE {
 	// No operation
 	NOOP,
 	// Game exists but has not been started

@@ -1,23 +1,20 @@
-package com.dovidkopel.tictactoe.oop.game.turn;
+package com.dovidkopel.game.turn;
 
-import com.dovidkopel.tictactoe.oop.player.Player;
+import com.dovidkopel.game.player.Player;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
-import java.util.Optional;
 import java.util.UUID;
 
-public class TurnImpl<T extends Action> implements Turn<T> {
+public abstract class TurnImpl implements Turn {
 	final private UUID id;
 	final private LocalDateTime created;
 	final private Player player;
 	private LocalDateTime updated;
-	private Optional<T> action = Optional.empty();
 
-	public TurnImpl(Turn turn, T action) {
+	public TurnImpl(Turn turn) {
 		this(turn.getId(), turn.getCreated(), turn.getPlayer());
 		this.updated = LocalDateTime.now();
-		this.action = Optional.of(action);
 	}
 
 	public TurnImpl(UUID id, LocalDateTime created, Player player) {
@@ -43,11 +40,6 @@ public class TurnImpl<T extends Action> implements Turn<T> {
 	@Override
 	public LocalDateTime getUpdated() {
 		return updated;
-	}
-
-	@Override
-	public Optional<T> getAction() {
-		return action;
 	}
 
 	@Override

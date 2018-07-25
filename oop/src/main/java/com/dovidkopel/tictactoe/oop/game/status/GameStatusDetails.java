@@ -11,7 +11,7 @@ public interface GameStatusDetails<T> extends Serializable, Comparable<GameStatu
 
 	LocalDateTime getCreated();
 
-	GameStatus getStatus();
+	GameStatusE getStatus();
 
 	Long getPriority();
 

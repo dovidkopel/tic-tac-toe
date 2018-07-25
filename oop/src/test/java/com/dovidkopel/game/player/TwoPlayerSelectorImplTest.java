@@ -1,4 +1,4 @@
-package com.dovidkopel.tictactoe.oop.player;
+package com.dovidkopel.game.player;
 
 import org.junit.Assert;
 import org.junit.Test;

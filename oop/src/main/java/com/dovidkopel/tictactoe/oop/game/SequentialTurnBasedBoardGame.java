@@ -1,10 +1,10 @@
 package com.dovidkopel.tictactoe.oop.game;
 
-import com.dovidkopel.tictactoe.oop.board.Board;
+import com.dovidkopel.game.board.Board;
 import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
 import com.dovidkopel.tictactoe.oop.game.turn.Action;
-import com.dovidkopel.tictactoe.oop.game.turn.Turn;
-import com.dovidkopel.tictactoe.oop.player.Player;
+import com.dovidkopel.game.turn.Turn;
+import com.dovidkopel.game.player.Player;
 
 import java.util.Collection;
 

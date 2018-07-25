@@ -1,6 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game;
 
-import com.dovidkopel.tictactoe.oop.game.turn.Turn;
+import com.dovidkopel.game.turn.Turn;
 import com.dovidkopel.tictactoe.oop.game.turn.TurnHistory;
 
 import java.io.Serializable;

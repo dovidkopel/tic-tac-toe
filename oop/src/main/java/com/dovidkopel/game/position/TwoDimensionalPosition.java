@@ -1,6 +1,4 @@
-package com.dovidkopel.tictactoe.oop.position;
-
-import org.springframework.stereotype.Component;
+package com.dovidkopel.game.position;
 
 import java.util.Objects;
 import java.util.Optional;

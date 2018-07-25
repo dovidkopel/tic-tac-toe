@@ -1,12 +1,10 @@
-package com.dovidkopel.tictactoe.oop.board;
+package com.dovidkopel.game.board;
 
-import com.dovidkopel.tictactoe.oop.position.Position;
+import com.dovidkopel.game.position.Position;
 
 import java.util.Collection;
 
 public interface TicTacToeBoard extends Board {
-	<T extends Position> Collection<T> getAllPositions();
-
 	<T extends Position> Collection<T> getAvailablePositions();
 
 	<T extends Position> Collection<T> getUnavailablePositions();

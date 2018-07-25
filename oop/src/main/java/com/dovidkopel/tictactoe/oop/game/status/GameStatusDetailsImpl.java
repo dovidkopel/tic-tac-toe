@@ -8,10 +8,10 @@ public class GameStatusDetailsImpl<T> implements GameStatusDetails<T> {
 	final private UUID id;
 	final private LocalDateTime created;
 	final private Long priority;
-	final private GameStatus status;
+	final private GameStatusE status;
 	final private Optional<T> details;
 
-	public GameStatusDetailsImpl(UUID id, LocalDateTime created, Long priority, GameStatus status, Optional<T> details) {
+	public GameStatusDetailsImpl(UUID id, LocalDateTime created, Long priority, GameStatusE status, Optional<T> details) {
 		this.id = id;
 		this.created = created;
 		this.priority = priority;
@@ -19,11 +19,11 @@ public class GameStatusDetailsImpl<T> implements GameStatusDetails<T> {
 		this.details = details;
 	}
 
-	public GameStatusDetailsImpl(GameStatus status, T details) {
+	public GameStatusDetailsImpl(GameStatusE status, T details) {
 		this(UUID.randomUUID(), LocalDateTime.now(), 0L, status, Optional.of(details));
 	}
 
-	public GameStatusDetailsImpl(GameStatus status) {
+	public GameStatusDetailsImpl(GameStatusE status) {
 		this(UUID.randomUUID(), LocalDateTime.now(), 0L, status, Optional.empty());
 	}
 
@@ -38,7 +38,7 @@ public class GameStatusDetailsImpl<T> implements GameStatusDetails<T> {
 	}
 
 	@Override
-	public GameStatus getStatus() {
+	public GameStatusE getStatus() {
 		return status;
 	}
 
