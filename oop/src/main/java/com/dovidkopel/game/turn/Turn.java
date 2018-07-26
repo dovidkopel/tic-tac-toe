@@ -6,6 +6,7 @@ import com.dovidkopel.tictactoe.oop.game.turn.Action;
 
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.Optional;
 import java.util.Set;
 import java.util.UUID;
@@ -23,4 +24,6 @@ public interface Turn extends Serializable, Comparable<Turn> {
 	Set<? extends TurnStatus> getStatuses();
 
 	Player getPlayer();
+
+	Collection<? extends Action> getActions();
 }

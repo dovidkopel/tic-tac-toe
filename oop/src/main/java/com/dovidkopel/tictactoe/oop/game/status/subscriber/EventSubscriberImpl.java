@@ -3,13 +3,13 @@ package com.dovidkopel.tictactoe.oop.game.status.subscriber;
 import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetailsImpl;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatusSubscriberImpl;
+import com.dovidkopel.tictactoe.oop.game.status.EventSubscriberImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 @Component
-public class AbortedSubscription<GE extends GameEvent, S> extends GameStatusSubscriberImpl<GE, S> {
-	public AbortedSubscription() {
+public class EventSubscriberImpl<GE extends GameEvent, S> extends EventSubscriberImpl<GE, S> {
+	public EventSubscriberImpl() {
 		super(
 			2L,
 			// Apply the status of aborted

@@ -1,6 +1,6 @@
 package com.dovidkopel.tictactoe.oop.game.status;
 
-import com.dovidkopel.tictactoe.oop.game.Game;
+import com.dovidkopel.game.Game;
 
 import java.time.LocalDateTime;
 import java.util.Optional;

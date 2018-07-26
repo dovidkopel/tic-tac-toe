@@ -1,6 +1,8 @@
 package com.dovidkopel.tictactoe.oop.game;
 
+import com.dovidkopel.game.SequentialTurnBasedBoardGame;
 import com.dovidkopel.game.board.TicTacToeBoard;
+import com.dovidkopel.game.event.EventBus;
 import com.dovidkopel.tictactoe.oop.game.status.*;
 import com.dovidkopel.game.turn.Turn;
 import com.dovidkopel.game.player.Player;
@@ -24,7 +26,7 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 	private LocalDateTime updated;
 
-	private GameStatusEventBus eventBus;
+	private EventBus eventBus;
 
 	private List<GameStatusDetails> statuses = new CopyOnWriteArrayList();
 
@@ -51,7 +53,7 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	}
 
 	@Autowired
-	public SequentialTurnBasedBoardGameImpl<T> setEventBus(GameStatusEventBus eventBus) {
+	public SequentialTurnBasedBoardGameImpl<T> setEventBus(EventBus eventBus) {
 		this.eventBus = eventBus;
 		return this;
 	}

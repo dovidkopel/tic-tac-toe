@@ -1,5 +1,6 @@
 package com.dovidkopel.tictactoe.oop;
 
+import com.dovidkopel.game.event.EventBus;
 import com.dovidkopel.tictactoe.oop.game.TicTacToeImpl;
 import com.dovidkopel.tictactoe.oop.game.status.*;
 import org.junit.Assert;
@@ -20,7 +21,7 @@ public class TicTacToeImplTest {
 	TicTacToeImpl ticTacToeImpl;
 
 	@Autowired
-	GameStatusEventBus eventBus;
+	EventBus eventBus;
 
 	@Autowired
 	ApplicationContext context;
@@ -29,7 +30,7 @@ public class TicTacToeImplTest {
 	public void simpleEventTest() {
 		eventBus.unsubscribeAll();
 		eventBus.subscribe(
-			new GameStatusSubscriberImpl<>(
+			new EventSubscriberImpl<>(
 				ge -> Arrays.asList(new GameStatusDetailsImpl(GameStatusE.NOT_STARTED)),
 				ge -> !ge.getGame().getStatuses().contains(GameStatusE.STARTED)
 			)
@@ -48,7 +49,7 @@ public class TicTacToeImplTest {
 
 		// Checking that the priority will
 		eventBus.subscribe(
-			new GameStatusSubscriberImpl<>(
+			new EventSubscriberImpl<>(
 				2L,
 				// Apply the status of aborted
 				ge -> Arrays.asList(new GameStatusDetailsImpl(GameStatusE.ABORTED)),
@@ -62,7 +63,7 @@ public class TicTacToeImplTest {
 			)
 		);
 		eventBus.subscribe(
-			new GameStatusSubscriberImpl<>(
+			new EventSubscriberImpl<>(
 				0L,
 				// Apply the NOT_STARTED status
 				ge -> Arrays.asList(new GameStatusDetailsImpl(GameStatusE.NOT_STARTED)),
@@ -76,7 +77,7 @@ public class TicTacToeImplTest {
 			)
 		);
 		eventBus.subscribe(
-			new GameStatusSubscriberImpl<>(
+			new EventSubscriberImpl<>(
 				1L,
 				ge -> Arrays.asList(new GameStatusDetailsImpl(GameStatusE.STARTED)),
 				ge -> {
@@ -116,7 +117,7 @@ public class TicTacToeImplTest {
 
 	@Test
 	public void test3() {
-		GameStatusEventBus bus = context.getBean(GameStatusEventBus.class);
+		EventBus bus = context.getBean(EventBus.class);
 		TicTacToeImpl t = context.getBean(TicTacToeImpl.class);
 		Assert.assertEquals(3, bus.getSubscriptions().size());
 		List<GameStatusE> statuses = t.getStatuses();

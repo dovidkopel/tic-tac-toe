@@ -1,5 +1,7 @@
 package com.dovidkopel.tictactoe.oop.game.status;
 
+import com.dovidkopel.game.event.EventBus;
+import com.dovidkopel.game.event.EventSubscriber;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -9,24 +11,24 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class GameStatusEventBusImpl<GE extends GameEvent, S> implements GameStatusEventBus<GE, S> {
-	final private List<GameStatusSubscriber<GE, S>> subscribers = new ArrayList();
+public class EventBusImpl<GE extends GameEvent, S> implements EventBus<GE, S> {
+	final private List<EventSubscriber<GE, S>> subscribers = new ArrayList();
 
-	final private List<GameStatusSubscriber<GE, S>> autowiredSubscribers = new ArrayList();
+	final private List<EventSubscriber<GE, S>> autowiredSubscribers = new ArrayList();
 
 	@Autowired
-	public void setAutowiredSubscribers(List<GameStatusSubscriber<GE, S>> subs) {
+	public void setAutowiredSubscribers(List<EventSubscriber<GE, S>> subs) {
 		this.autowiredSubscribers.addAll(subs);
 		subs.forEach(this::subscribe);
 	}
 
-	private List<GameStatusSubscriber<GE, S>> cloneSubscribers() {
+	private List<EventSubscriber<GE, S>> cloneSubscribers() {
 		return new ArrayList(subscribers);
 	}
 
 	@Override
-	public synchronized UUID subscribe(GameStatusSubscriber callback) {
-		List<GameStatusSubscriber<GE, S>> temp = cloneSubscribers();
+	public synchronized UUID subscribe(EventSubscriber callback) {
+		List<EventSubscriber<GE, S>> temp = cloneSubscribers();
 		temp.add(callback);
 
 		subscribers.clear();
@@ -41,7 +43,7 @@ public class GameStatusEventBusImpl<GE extends GameEvent, S> implements GameStat
 
 	@Override
 	public synchronized void unsubscribe(UUID id) {
-		List<GameStatusSubscriber<GE, S>> temp = cloneSubscribers();
+		List<EventSubscriber<GE, S>> temp = cloneSubscribers();
 
 		subscribers.clear();
 		subscribers.addAll(
@@ -58,7 +60,7 @@ public class GameStatusEventBusImpl<GE extends GameEvent, S> implements GameStat
 	}
 
 	@Override
-	public List<GameStatusSubscriber<GE, S>> getSubscriptions() {
+	public List<EventSubscriber<GE, S>> getSubscriptions() {
 		return subscribers;
 	}
 
