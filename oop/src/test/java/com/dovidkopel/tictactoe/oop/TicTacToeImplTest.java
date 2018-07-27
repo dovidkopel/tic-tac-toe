@@ -1,6 +1,7 @@
 package com.dovidkopel.tictactoe.oop;
 
 import com.dovidkopel.game.event.EventBus;
+import com.dovidkopel.game.event.EventSubscriberImpl;
 import com.dovidkopel.tictactoe.oop.game.TicTacToeImpl;
 import com.dovidkopel.tictactoe.oop.game.status.*;
 import org.junit.Assert;

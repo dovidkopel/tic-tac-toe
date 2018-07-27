@@ -3,7 +3,7 @@ package com.dovidkopel.tictactoe.oop.game.status.subscriber;
 import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetailsImpl;
-import com.dovidkopel.tictactoe.oop.game.status.EventSubscriberImpl;
+import com.dovidkopel.game.event.EventSubscriberImpl;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;

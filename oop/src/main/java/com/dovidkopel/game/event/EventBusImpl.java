@@ -1,7 +1,9 @@
-package com.dovidkopel.tictactoe.oop.game.status;
+package com.dovidkopel.game.event;
 
 import com.dovidkopel.game.event.EventBus;
 import com.dovidkopel.game.event.EventSubscriber;
+import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
+import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetails;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -11,24 +13,24 @@ import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Component
-public class EventBusImpl<GE extends GameEvent, S> implements EventBus<GE, S> {
-	final private List<EventSubscriber<GE, S>> subscribers = new ArrayList();
+public class EventBusImpl<E extends Event<S>, S> implements EventBus<E, S> {
+	final private List<EventSubscriber<E, S>> subscribers = new ArrayList();
 
-	final private List<EventSubscriber<GE, S>> autowiredSubscribers = new ArrayList();
+	final private List<EventSubscriber<E, S>> autowiredSubscribers = new ArrayList();
 
 	@Autowired
-	public void setAutowiredSubscribers(List<EventSubscriber<GE, S>> subs) {
+	public void setAutowiredSubscribers(List<EventSubscriber<E, S>> subs) {
 		this.autowiredSubscribers.addAll(subs);
 		subs.forEach(this::subscribe);
 	}
 
-	private List<EventSubscriber<GE, S>> cloneSubscribers() {
+	private List<EventSubscriber<E, S>> cloneSubscribers() {
 		return new ArrayList(subscribers);
 	}
 
 	@Override
 	public synchronized UUID subscribe(EventSubscriber callback) {
-		List<EventSubscriber<GE, S>> temp = cloneSubscribers();
+		List<EventSubscriber<E, S>> temp = cloneSubscribers();
 		temp.add(callback);
 
 		subscribers.clear();
@@ -43,7 +45,7 @@ public class EventBusImpl<GE extends GameEvent, S> implements EventBus<GE, S> {
 
 	@Override
 	public synchronized void unsubscribe(UUID id) {
-		List<EventSubscriber<GE, S>> temp = cloneSubscribers();
+		List<EventSubscriber<E, S>> temp = cloneSubscribers();
 
 		subscribers.clear();
 		subscribers.addAll(
@@ -60,12 +62,12 @@ public class EventBusImpl<GE extends GameEvent, S> implements EventBus<GE, S> {
 	}
 
 	@Override
-	public List<EventSubscriber<GE, S>> getSubscriptions() {
+	public List<EventSubscriber<E, S>> getSubscriptions() {
 		return subscribers;
 	}
 
 	@Override
-	public List<GameStatusDetails<S>> trigger(GE event) {
+	public List<GameStatusDetails<S>> trigger(E event) {
 		// Already pre-sorted
 		return subscribers
 			.stream()

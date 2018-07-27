@@ -27,8 +27,6 @@ public class FunctionalTicTacToe {
 	// player o
 	private int scoreO = 0;
 
-	private Scanner scanner = new Scanner(System.in);
-
 	// The current player
 	private char turn;
 
@@ -132,7 +130,7 @@ public class FunctionalTicTacToe {
 	}
 
 	public Scanner getScanner() {
-		return scanner;
+		return new Scanner(System.in);
 	}
 
 	public int getNextInt() {
@@ -146,9 +144,11 @@ public class FunctionalTicTacToe {
 	public void moveInput() {
 		printBoard();
 		System.out.println(String.format("Player %s input your next move: ", turn));
-		int s = getNextInt();
+
 
 		try {
+			int s = getNextInt();
+
 			if(s >= 0 && s < size*size) {
 				makeMove(turn, s);
 				System.out.println(String.format("Player %s just went.", turn));
@@ -162,11 +162,20 @@ public class FunctionalTicTacToe {
 				} else {
 					nextPlayer();
 				}
+			} else {
+				inputError();
 			}
 		} catch(IllegalArgumentException e) {
-			System.err.println(String.format("%s%s%s", ANSI_RED, "Invalid move!", ANSI_RESET));
-			moveInput();
+			inputError();
+		} catch(java.util.InputMismatchException ee) {
+			inputError();
 		}
+	}
+
+	private void inputError() {
+		System.err.println(String.format("%s%s%s", ANSI_RED, "Invalid move!", ANSI_RESET));
+		getScanner().reset();
+		moveInput();
 	}
 
 	public void makeMove(char player, int x) {
