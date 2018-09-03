@@ -1,10 +1,6 @@
-package com.dovidkopel.tictactoe.oop.game;
+package com.dovidkopel.game;
 
 import com.dovidkopel.game.board.TicTacToeBoard;
-import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
-import com.dovidkopel.tictactoe.oop.game.status.GameEventImpl;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
-import com.dovidkopel.tictactoe.oop.game.turn.Action;
 import com.dovidkopel.game.turn.Turn;
 import com.dovidkopel.game.turn.TurnImpl;
 import com.dovidkopel.game.player.Player;

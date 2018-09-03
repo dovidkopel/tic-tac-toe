@@ -1,8 +1,6 @@
 package com.dovidkopel.game.event;
 
-import com.dovidkopel.game.event.Event;
-import com.dovidkopel.game.event.EventSubscriber;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetails;
+import com.dovidkopel.game.status.Status;
 
 import java.util.List;
 import java.util.UUID;
@@ -16,5 +14,5 @@ public interface EventBus<E extends Event<S>, S> {
 
 	List<EventSubscriber<E, S>> getSubscriptions();
 
-	List<GameStatusDetails<S>> trigger(E event);
+	List<? extends Status> trigger(E event);
 }

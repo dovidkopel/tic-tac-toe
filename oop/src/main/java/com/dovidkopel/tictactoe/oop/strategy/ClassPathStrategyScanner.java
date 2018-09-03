@@ -1,6 +1,6 @@
 package com.dovidkopel.tictactoe.oop.strategy;
 
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
+import io.github.classgraph.ClassGraph;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Component;
@@ -13,21 +13,25 @@ import java.util.List;
 public class ClassPathStrategyScanner implements StrategyScanner {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 	private List<WinningStrategy> strategies = new ArrayList();
-	private FastClasspathScanner scanner = new FastClasspathScanner();
+	private ClassGraph classGraph = new ClassGraph();
 
 	@PostConstruct
 	protected void init() {
-		scanner.matchClassesImplementing(WinningStrategy.class,
-			i -> {
+		classGraph.scan()
+			.getClassesImplementing(WinningStrategy.class.getName())
+			.getStandardClasses()
+			.forEach(c -> {
 				try {
-					strategies.add(i.newInstance());
-				} catch (IllegalAccessException e) {
-					e.printStackTrace();
+					Class<WinningStrategy> cs = (Class<WinningStrategy>) Class.forName(c.getName()).newInstance();
+					strategies.add(cs.newInstance());
 				} catch (InstantiationException e) {
 					e.printStackTrace();
+				} catch (IllegalAccessException e) {
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
+					e.printStackTrace();
 				}
-			}
-		).scan();
+			});
 		logger.info("There are {} winning strategies", strategies.size());
 	}
 

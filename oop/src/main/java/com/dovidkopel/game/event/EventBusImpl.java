@@ -1,9 +1,6 @@
 package com.dovidkopel.game.event;
 
-import com.dovidkopel.game.event.EventBus;
-import com.dovidkopel.game.event.EventSubscriber;
-import com.dovidkopel.tictactoe.oop.game.status.GameEvent;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatusDetails;
+import com.dovidkopel.game.status.Status;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -67,9 +64,9 @@ public class EventBusImpl<E extends Event<S>, S> implements EventBus<E, S> {
 	}
 
 	@Override
-	public List<GameStatusDetails<S>> trigger(E event) {
+	public List<? extends Status> trigger(E event) {
 		// Already pre-sorted
-		return subscribers
+		return (List<Status>) subscribers
 			.stream()
 			.filter(s -> s.test(event))
 			.flatMap(s -> s.apply(event).stream())

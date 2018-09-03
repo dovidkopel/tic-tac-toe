@@ -1,13 +1,10 @@
-package com.dovidkopel.tictactoe.oop.game;
+package com.dovidkopel.game;
 
-import com.dovidkopel.game.SequentialTurnBasedBoardGame;
 import com.dovidkopel.game.board.TicTacToeBoard;
+import com.dovidkopel.game.event.Event;
 import com.dovidkopel.game.event.EventBus;
-import com.dovidkopel.tictactoe.oop.game.status.*;
+import com.dovidkopel.game.status.Status;
 import com.dovidkopel.game.turn.Turn;
-import com.dovidkopel.game.player.Player;
-import com.dovidkopel.game.player.PlayerSelector;
-import com.dovidkopel.tictactoe.oop.strategy.WinningStrategy;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -22,13 +19,12 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 	final private LocalDateTime created;
 
-	private PlayerSelector playerSelector;
-
 	private LocalDateTime updated;
 
 	private EventBus eventBus;
 
-	private List<GameStatusDetails> statuses = new CopyOnWriteArrayList();
+	private List<? extends Status> statuses = new CopyOnWriteArrayList();
+
 
 	public SequentialTurnBasedBoardGameImpl() {
 		this.created = LocalDateTime.now();
@@ -41,18 +37,6 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	}
 
 	@Autowired
-	public SequentialTurnBasedBoardGameImpl setPlayerSelector(PlayerSelector playerSelector) {
-		this.playerSelector = playerSelector;
-		return this;
-	}
-
-	@Autowired
-	public SequentialTurnBasedBoardGameImpl<T> setStrategies(List<WinningStrategy> strategies) {
-		this.strategies = strategies;
-		return this;
-	}
-
-	@Autowired
 	public SequentialTurnBasedBoardGameImpl<T> setEventBus(EventBus eventBus) {
 		this.eventBus = eventBus;
 		return this;
@@ -60,24 +44,21 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 
 	@PostConstruct
 	public void init() {
-		evaluate(GameStatusE.NOOP);
+
+
+
 	}
 
 	@Override
 	public Turn start() {
-		evaluate(GameStatusE.START_GAME);
+//		evaluate(GameStatusE.START_GAME);
 		return getCurrentTurn();
 	}
 
-
-
 	@Override
 	public void stop() {
-		evaluate(GameStatusE.STOP_GAME);
-	}
 
-	public List<GameStatusDetails> evaluate(GameStatusE gameStatusE) {
-		return evaluate(new GameEventImpl(gameStatusE, this));
+
 	}
 
 	/****
@@ -87,27 +68,15 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	 */
 
 	@Override
-	public synchronized List<GameStatusDetails> evaluate(GameEvent event) {
+	public synchronized List<? extends Status> evaluate(Event event) {
 		statuses = eventBus.trigger(event);
 		return statuses;
 	}
 
 	@Override
-	public List<GameStatusDetails> getStatusDetails() {
+	public List<? extends Status> getStatusDetails() {
 		return statuses;
 	}
-
-	@Override
-	public Player getCurrentPlayer() {
-		return playerSelector.getCurrentPlayer();
-	}
-
-	@Override
-	public Turn getCurrentTurn() {
-		return currentTurn;
-	}
-
-
 
 	@Override
 	public UUID getId() {
@@ -122,10 +91,5 @@ public abstract class SequentialTurnBasedBoardGameImpl<T extends TicTacToeBoard>
 	@Override
 	public LocalDateTime getUpdated() {
 		return updated;
-	}
-
-	@Override
-	public List<Turn> getTurns() {
-		return turns.subList(0, turns.size());
 	}
 }

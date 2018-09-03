@@ -1,6 +1,7 @@
-package com.dovidkopel.tictactoe.oop.game;
+package com.dovidkopel.game;
 
 import com.dovidkopel.game.board.TicTacToeBoard;
+import com.dovidkopel.game.player.PlayerSelector;
 import com.dovidkopel.tictactoe.oop.game.status.GameEventImpl;
 import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
 import com.dovidkopel.game.turn.Turn;
@@ -17,6 +18,8 @@ public class TicTacToeImpl extends TicTacToe {
 	private Logger logger = LoggerFactory.getLogger(getClass());
 
 	private StrategyScanner strategyScanner;
+
+	private PlayerSelector playerSelector;
 
 	private TicTacToeBoard board;
 

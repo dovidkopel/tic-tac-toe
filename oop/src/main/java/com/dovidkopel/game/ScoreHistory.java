@@ -1,4 +1,4 @@
-package com.dovidkopel.tictactoe.oop.game;
+package com.dovidkopel.game;
 
 import com.dovidkopel.game.player.Player;
 
