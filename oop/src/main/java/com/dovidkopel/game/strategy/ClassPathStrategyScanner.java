@@ -1,4 +1,4 @@
-package com.dovidkopel.tictactoe.oop.strategy;
+package com.dovidkopel.game.strategy;
 
 import io.github.classgraph.ClassGraph;
 import org.slf4j.Logger;

@@ -1,17 +1,18 @@
 package com.dovidkopel.game;
 
+import com.dovidkopel.game.board.BoardGame;
 import com.dovidkopel.game.board.TicTacToeBoard;
 import com.dovidkopel.game.player.PlayerSelector;
-import com.dovidkopel.tictactoe.oop.game.status.GameEventImpl;
-import com.dovidkopel.tictactoe.oop.game.status.GameStatusE;
-import com.dovidkopel.game.turn.Turn;
-import com.dovidkopel.game.turn.TurnImpl;
 import com.dovidkopel.game.player.Player;
-import com.dovidkopel.tictactoe.oop.strategy.StrategyScanner;
+import com.dovidkopel.game.strategy.StrategyScanner;
+import com.dovidkopel.game.strategy.WinningStrategy;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
+import java.util.Collection;
+import java.util.List;
 
 @Service
 public class TicTacToeImpl extends TicTacToe {
@@ -22,8 +23,6 @@ public class TicTacToeImpl extends TicTacToe {
 	private PlayerSelector playerSelector;
 
 	private TicTacToeBoard board;
-
-	private Turn currentTurn;
 
 	@Autowired
 	public TicTacToeImpl setStrategyScanner(StrategyScanner strategyScanner) {
@@ -37,36 +36,39 @@ public class TicTacToeImpl extends TicTacToe {
 		return this;
 	}
 
+	@Autowired
+	public TicTacToeImpl setPlayerSelector(PlayerSelector playerSelector) {
+		this.playerSelector = playerSelector;
+		return this;
+	}
+
 	@Override
 	public TicTacToeBoard getBoard() {
 		return board;
 	}
 
 	@Override
-	public Turn getNextTurn() {
-		// Invoke a TurnPreSelection event
-		evaluate(
-			new GameEventImpl(
-				GameStatusE.TURN_PRE_SELECTION,
-				this
-			)
-		);
+	public void reset() {
 
-		Player np = playerSelector.nextPlayer();
-		Turn nt = new TurnImpl(np);
-
-		evaluate(
-			new GameEventImpl(
-				GameStatusE.TURN_ACTIVE,
-				nt,
-				this
-			)
-		);
-
-		currentTurn = nt;
-		turns.add(currentTurn);
-		return currentTurn;
 	}
 
+	@Override
+	public Collection<Player> getAllPlayers() {
+		return playerSelector.getAllPlayers();
+	}
 
+	@Override
+	public Player getCurrentPlayer() {
+		return playerSelector.getCurrentPlayer();
+	}
+
+	@Override
+	public Player nextPlayer() {
+		return playerSelector.nextPlayer();
+	}
+
+	@Override
+	List<WinningStrategy<BoardGame>> getWinningStrategies() {
+		return strategyScanner.getWinningStrategies();
+	}
 }

@@ -6,7 +6,7 @@ import org.junit.Test;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TwoPlayerSelectorImplTest {
+public class RandomTwoPlayerSelectorImplTest {
 
 	@Test
 	public void currentPlayer() {
@@ -14,7 +14,7 @@ public class TwoPlayerSelectorImplTest {
 
 	@Test
 	public void nextPlayerRandom() {
-		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl();
+		RandomTwoPlayerSelectorImpl selector = new RandomTwoPlayerSelectorImpl();
 		Assert.assertTrue(selector.getCurrentPlayer() == null);
 		selector.init();
 		int s = selector.getStarting();
@@ -41,7 +41,7 @@ public class TwoPlayerSelectorImplTest {
 
 	@Test
 	public void nextPlayerX() {
-		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl(0);
+		RandomTwoPlayerSelectorImpl selector = new RandomTwoPlayerSelectorImpl(0);
 		Assert.assertTrue(selector.getCurrentPlayer() == null);
 		selector.init();
 		int s = selector.getStarting();
@@ -52,7 +52,7 @@ public class TwoPlayerSelectorImplTest {
 
 	@Test
 	public void nextPlayerO() {
-		TwoPlayerSelectorImpl selector = new TwoPlayerSelectorImpl(1);
+		RandomTwoPlayerSelectorImpl selector = new RandomTwoPlayerSelectorImpl(1);
 		Assert.assertTrue(selector.getCurrentPlayer() == null);
 		selector.init();
 		int s = selector.getStarting();

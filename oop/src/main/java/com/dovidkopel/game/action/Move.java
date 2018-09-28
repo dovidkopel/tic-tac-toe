@@ -1,5 +1,11 @@
 package com.dovidkopel.game.action;
 
 
-public class Move implements Action {
+import com.dovidkopel.game.board.BoardGame;
+
+public class Move implements BoardGameAction {
+	@Override
+	public Boolean isValid(BoardGame game) {
+		return null;
+	}
 }

@@ -1,4 +1,4 @@
-package com.dovidkopel.tictactoe.oop;
+package com.dovidkopel.game;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

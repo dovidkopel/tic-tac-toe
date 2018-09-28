@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import java.util.concurrent.ThreadLocalRandom;
 
 @Component
-public class TwoPlayerSelectorImpl extends TwoPlayerSelector {
+public class RandomTwoPlayerSelectorImpl extends TwoPlayerSelector {
 	final private int upperBound = getAllPlayers().size();
 
 	final private int starting;
@@ -14,11 +14,11 @@ public class TwoPlayerSelectorImpl extends TwoPlayerSelector {
 
 	private Player player;
 
-	public TwoPlayerSelectorImpl(int starting) {
+	public RandomTwoPlayerSelectorImpl(int starting) {
 		this.starting = starting;
 	}
 
-	public TwoPlayerSelectorImpl() {
+	public RandomTwoPlayerSelectorImpl() {
 		this.starting = ThreadLocalRandom.current().nextInt(0, upperBound);
 	}
 
